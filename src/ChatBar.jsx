@@ -19,12 +19,10 @@ class ChatBar extends Component {
         <input className="chatbar-username" placeholder="Your Name (Optional)" value={this.state.username}
            onChange={(e) => {
              this.setState({username: e.target.value});
-            //  console.log(this.state)
            }}/>
         <input className="chatbar-message" placeholder="Type a message and hit ENTER" value={this.state.message} 
            onChange={(e) => {
              this.setState({message: e.target.value});
-            //  console.log(this.state)
            }}
            onKeyPress={this._handleKeyPress}/>
       </footer>
