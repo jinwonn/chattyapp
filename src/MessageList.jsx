@@ -9,7 +9,7 @@ class MessageList extends Component {
     return (
       <main className="messages">
       {this.props.messages.map(message => {
-      return <Message username={message.username} content = {message.content} key = {message.key}/>
+      return <Message username={message.username} content = {message.content} key = {message.key} type = {message.type}/>
       })}
   
 </main>

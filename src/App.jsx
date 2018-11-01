@@ -19,12 +19,26 @@ class App extends Component {
     this.setState({loading: false});
 
     this.socket.onmessage = (event) => {
-      console.log(event.data);
-      this._newMessage(JSON.parse(event.data))
+      const data = JSON.parse(event.data);
+      console.log("Client recevied", data);
+      switch(data.type) {
+        case "incomingMessage":
+          this._newMessage(data)
+          break;
+        case "incomingNotification":
+          this._newNotification(data)
+          break;
+        default:
+          // show an error in the console if the message type is unknown
+          throw new Error("Unknown event type " + data.type);
+      }
     }
     
     setTimeout(() => {
-      const newMessage = {key: 1, username: "ChattyBot", content: "Hello there! Has anyone seen my marbles? Please enter your name and start chatting away!"};
+      const newMessage = {key: 1, 
+                          username: "ChattyBot", 
+                          content: "Hello there! Has anyone seen my marbles? Please enter your name and start chatting away!",
+                          type: "message"};
       const messages = this.state.messages.concat(newMessage)
       this.setState({messages: messages})
     }, 1500);
@@ -33,21 +47,28 @@ class App extends Component {
   _sendMessage = (message) => {
     this.socket.send(JSON.stringify(message))
     console.log(this.socket)
-    console.log("sent", message)
+    console.log("Client send:", message)
 
   }
 
   _newMessage = (message) => {
-    // let id = this.state.currentmessageid;
-    // if (message.username) {
-        var newMessage = {username: message.username, content: message.message, key: message.id}
-      // } else {
-      //   var newMessage = {username: "Anonymous", content: message.message, key: id++}
-      // }
-      const messages = this.state.messages.concat(newMessage)
-    // this.setState({messages: messages, currentmessageid: id})
+    var newMessage = {username: message.username, 
+                      content: message.message, 
+                      key: message.id,
+                      type: "message"}
+    const messages = this.state.messages.concat(newMessage)
     this.setState({messages: messages})
-    }
+    console.log(this.state.messages)
+  }
+
+  _newNotification = (message) => {
+    var newMessage = {username: message.username, 
+                      content: message.message, 
+                      key: message.id,
+                      type: "notification"}
+    const messages = this.state.messages.concat(newMessage)
+    this.setState({messages: messages})
+  }    
  
   render() {
     return (

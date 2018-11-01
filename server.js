@@ -46,16 +46,24 @@ const wss = new SocketServer({ server });
 
   ws.on('message', (data) => {
     let message = JSON.parse(data);
-    message.id = uuidv4();
-    if (!message.username) {
-      message.username = 'Anonymous';
-    }
     console.log("received", message);
+    if (message.type == "postMessage") {
+      message.id = uuidv4();
+      message.type = "incomingMessage"
+      if (!message.username) {
+        message.username = 'Anonymous';
+      }
+    } else if (message.type == "postNotification") {
+      message.id = uuidv4();
+      message.type = "incomingNotification"
+    }
+    
+    // console.log("sending", message);
 
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(message));
-        console.log("sent:", message);
+        console.log("Server sent:", message);
       } else { console.log("not connected", client.readyState, WebSocket.OPEN)}
     });
 

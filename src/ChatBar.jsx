@@ -4,13 +4,30 @@ class ChatBar extends Component {
   constructor(props) {
     super(props);
     this.state = {message: "", 
-                  username: ""}; 
+                  username: "",
+                  oldusername: "Anonymous"}; 
   }
 
-  _handleKeyPress = (e) => {
+  _postMessage = (e) => {
     if (e.key === 'Enter') {
-    this.props.onSend(this.state)
-    this.setState({message: ""});
+      const postMessage = {
+        type: "postMessage",
+        username: this.state.username,
+        message: this.state.message,
+      };
+      this.props.onSend(postMessage)
+      this.setState({message: ""});
+    }
+  }
+  _postNotification = (e) => {
+    if (e.key === 'Enter') {
+      const postNotification = {
+      type: "postNotification",
+      username: this.state.username,
+      message: this.state.oldusername + " changed their name to " + this.state.username
+      }
+    this.props.onSend(postNotification);
+    this.setState({oldusername: this.state.username});
     }
   }
   
@@ -20,12 +37,13 @@ class ChatBar extends Component {
         <input className="chatbar-username" placeholder="Your Name (Optional)" value={this.state.username}
            onChange={(e) => {
              this.setState({username: e.target.value});
-           }}/>
+           }}
+           onKeyPress={this._postNotification}/>
         <input className="chatbar-message" placeholder="Type a message and hit ENTER" value={this.state.message} 
            onChange={(e) => {
              this.setState({message: e.target.value});
            }}
-           onKeyPress={this._handleKeyPress}/>
+           onKeyPress={this._postMessage}/>
       </footer>
     );
   }
