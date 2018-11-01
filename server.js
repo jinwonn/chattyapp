@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.config');
+const uuidv4 = require('uuid/v4');
 
 new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
@@ -23,6 +24,7 @@ new WebpackDevServer(webpack(config), {
 
 const express = require('express');
 const SocketServer = require('ws').Server;
+const WebSocket = require('ws');
 
 // Set the port to 3001
 const PORT = 3001;
@@ -43,9 +45,20 @@ const wss = new SocketServer({ server });
   console.log('Client connected');
 
   ws.on('message', (data) => {
-    console.log("message received")
-    console.log(data);
-    
+    let message = JSON.parse(data);
+    message.id = uuidv4();
+    if (!message.username) {
+      message.username = 'Anonymous';
+    }
+    console.log("received", message);
+
+    wss.clients.forEach(function each(client) {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify(message));
+        console.log("sent:", message);
+      } else { console.log("not connected", client.readyState, WebSocket.OPEN)}
+    });
+
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.

@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 class ChatBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {message: ""} 
+    this.state = {message: "", 
+                  username: ""}; 
   }
 
   _handleKeyPress = (e) => {
