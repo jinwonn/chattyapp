@@ -19,6 +19,7 @@ class ChatBar extends Component {
       this.setState({message: ""});
     }
   }
+  
   _postNotification = () => {
     if (this.state.username !== this.state.oldusername) {
       if (!(this.state.username === "" && this.state.oldusername === "Anonymous")) {
@@ -42,15 +43,8 @@ class ChatBar extends Component {
         }
       }
     }
-  
-      // const postNotification = {
-      // type: "postNotification",
-      // username: this.state.username,
-      // message: this.state.oldusername + " changed their name to " + this.state.username
-      // }
-    // this.props.onSend(postNotification);
-    // this.setState({oldusername: this.state.username});
   }
+
   _onEnter = (e) => {
     if (e.key === 'Enter') {
       this._postNotification()

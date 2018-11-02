@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
+// import usersconnected from '../server.js';
 
 class App extends Component {
   constructor(props) {
@@ -28,6 +29,9 @@ class App extends Component {
         case "incomingNotification":
           this._newNotification(data)
           break;
+        case "incomingInfo":
+          console.log("client received info:", data)
+          break;
         default:
           // show an error in the console if the message type is unknown
           throw new Error("Unknown event type " + data.type);
@@ -50,25 +54,25 @@ class App extends Component {
     console.log("Client send:", message)
 
   }
-
+  
   _newMessage = (message) => {
-    var newMessage = {username: message.username, 
-                      content: message.message, 
-                      key: message.id,
-                      type: "message"}
-    const messages = this.state.messages.concat(newMessage)
-    this.setState({messages: messages})
-    console.log(this.state.messages)
+    var type = "message"
+    this._record(message, type)
   }
 
   _newNotification = (message) => {
-    var newMessage = {username: message.username, 
-                      content: message.message, 
-                      key: message.id,
-                      type: "notification"}
+    var type = "notification"
+    this._record(message, type)
+  }
+  
+  _record = (content, type) => {
+    var newMessage = {username: content.username, 
+      content: content.message, 
+      key: content.id,
+      type: type}
     const messages = this.state.messages.concat(newMessage)
     this.setState({messages: messages})
-  }    
+  }
  
   render() {
     return (
