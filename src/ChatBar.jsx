@@ -19,8 +19,7 @@ class ChatBar extends Component {
       this.setState({message: ""});
     }
   }
-  _postNotification = (e) => {
-    if (e.key === 'Enter') {
+  _postNotification = () => {
       const postNotification = {
       type: "postNotification",
       username: this.state.username,
@@ -28,9 +27,19 @@ class ChatBar extends Component {
       }
     this.props.onSend(postNotification);
     this.setState({oldusername: this.state.username});
-    }
   }
-  
+  _onEnter = (e) => {
+    if (e.key === 'Enter') {
+      this._postNotification()
+    }
+  };
+
+  _onBlur = () => {
+    if (!this.state.focus) {
+      this._postNotification()
+    }
+  };
+
   render() {
     return (
       <footer className="chatbar">
@@ -38,7 +47,7 @@ class ChatBar extends Component {
            onChange={(e) => {
              this.setState({username: e.target.value});
            }}
-           onKeyPress={this._postNotification}/>
+           onKeyPress={this._onEnter} onBlur={this._onBlur}/>
         <input className="chatbar-message" placeholder="Type a message and hit ENTER" value={this.state.message} 
            onChange={(e) => {
              this.setState({message: e.target.value});
