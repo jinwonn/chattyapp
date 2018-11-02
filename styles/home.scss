@@ -14,7 +14,7 @@ body {
 }
 
 .chatbar {
-  background: tomato;
+  background:rgb(71, 227, 255);
   border-top: 1px solid black;
   bottom: 0;
   display: flex;
@@ -50,6 +50,8 @@ body {
 .message.system {
   font-style: italic;
   padding: 5px 20px;
+  font-size: 95%;
+  color: rgb(109, 109, 109)
 }
 
 .message-content,
@@ -69,7 +71,7 @@ body {
 }
 
 .navbar {
-  background: tomato;
+  background: rgb(71, 227, 255);
   border-bottom: 1px solid black;
   height: 60px;
   left: 0;
@@ -80,7 +82,7 @@ body {
 }
 
 .navbar-brand {
-  color: inherit;
+  color:  rgb(20, 65, 73);
   display: block;
   float: left;
   font-weight: 700;
@@ -89,4 +91,14 @@ body {
   line-height: 60px;
   padding: 0 10px;
   text-decoration: none;
+}
+
+#users {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  font-size: 120%;
+  color:  rgb(43, 116, 129);
 }

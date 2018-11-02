@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {loading: true,
-                  currentmessageid: 2,
+                  usersConnected: "",
                   messages: []
                 };
   }
@@ -15,7 +15,6 @@ class App extends Component {
   componentDidMount() {
     this.socket = new WebSocket('ws://0.0.0.0:3001/')
     this.socket.onopen = (con) => {console.log('Connected to server')}
-    // console.log(this.socket)
 
     this.setState({loading: false});
 
@@ -31,6 +30,7 @@ class App extends Component {
           break;
         case "incomingInfo":
           console.log("client received info:", data)
+          this.setState({usersConnected: data.content})
           break;
         default:
           // show an error in the console if the message type is unknown
@@ -79,6 +79,7 @@ class App extends Component {
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
+          <div id="users">{this.state.usersConnected} users connected</div>
         </nav>
         <MessageList messages = {this.state.messages}/>
         <ChatBar currentUser = {this.state.currentUser} onSend = {this._sendMessage}/>
