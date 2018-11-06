@@ -1,44 +1,19 @@
-React Boilerplate
-=====================
+# Chatty App Project
 
-A minimal and light dev environment for ReactJS.
+Chatty will allow users to communicate with each other without having to register accounts. It will use React as well as modern tools for Node including Webpack and Babel.
 
-### Usage
+## Getting Started
 
-Clone the boilerplate and create your own git repo.
+1. Fork this repository, then clone your fork of this repository.
+2. Install dependencies using the `npm install` command.
+3. Start the web server using the `npm start` command. The app will be served at <http://0.0.0.0:3000/>.
+4. Go to <http://0.0.0.0:3000/> in your browser.
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+## Final Product
 
-Install the dependencies and start the server.
+!["Main Page"](https://github.com/jinwonn/tweeter/blob/master/docs/main_page.png)
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
-
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
-
-### Dependencies
-
+## Dependancies
 * React
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
