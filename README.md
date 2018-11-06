@@ -11,7 +11,7 @@ Chatty will allow users to communicate with each other without having to registe
 
 ## Final Product
 
-!["Main Page"](https://github.com/jinwonn/tweeter/blob/master/docs/main_page.png)
+!["Main Page"](https://github.com/jinwonn/chattyapp/blob/master/docs/main_page.png)
 
 ## Dependancies
 * React
